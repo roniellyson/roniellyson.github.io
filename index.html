@@ -8,7 +8,7 @@
 <body>
 <form action="" method="get" id="id_formulario">
 <fieldset>
-<legend>Cadastro de Inscrição</legend>
+<legend>Inscrição</legend>
 <div>
 <label for="id_nome"
 >Nome completo:
@@ -78,6 +78,7 @@ document.querySelectorAll('input[name="checkbox"]:checked')
 return checkbox.value;
 });
 alert("Nome: " + nome +"\nEstado civil: " + estado +"\nCursos: " + cursos.join(", "));});
+
 </script>
 
 <script type="module">
@@ -107,6 +108,13 @@ alert("Nome: " + nome +"\nEstado civil: " + estado +"\nCursos: " + cursos.join("
     let form = document.getElementById("id_formulario");
 form.addEventListener("submit",(e)=>{
 e.preventDefault()// Evita o envio padrão do formulário
+
+for(let i = 0; i < form.checkbox.length; i++){
+if(form.checkbox[i].checked){
+vetor[i] = form.checkbox[i].value;
+console.log(form.checkbox[i].value)
+}
+}
 
   // Capture os valores do formulário
   const nome = form['nome'].value;
