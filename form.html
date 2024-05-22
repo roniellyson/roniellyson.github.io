@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Formulario</title>
+</head>
+<body>
+<form action="" method="get" id="id_formulario">
+<fieldset>
+<legend>Cadastro de Inscrição</legend>
+<div>
+<label for="id_nome"
+>Nome completo:
+<input
+type="text"
+name="nome"
+id="id_nome"
+placeholder="informe seu nome"
+minlength="5"
+maxlength="40"
+/>
+</label>
+</div>
+<div>
+<p>Estado Civil:</p>
+<label for="id_casa"
+>Casado
+<input type="radio" name="radio" value="casado" id="id_casa" />
+</label>
+<label for="id_solteiro"
+>Solteiro
+<input type="radio" name="radio" value="solteiro" id="id_solteiro" />
+</label>
+</div>
+
+<div>
+<p>Cursos:</p>
+<label for="id_pedre"
+>Pedreiro
+<input
+type="checkbox"
+name="checkbox"
+value="Pedreiro"
+id="id_pedre"
+/>
+</label>
+<label for="id_serve"
+>Servente
+<input
+type="checkbox"
+name="checkbox"
+value="Servente"
+id="id_serve"
+/>
+</label>
+<label for="id_monta"
+>Figma:
+<input
+type="checkbox"
+name="checkbox"
+value="Montador de Sapato"
+id="id_monta"
+/>
+</label>
+</div>
+<button type="button" id="enviar">Enviar</button>
+</div>
+</fieldset>
+</form>
+<script>
+document.getElementById("enviar").addEventListener("click", function () {
+let nome = document.getElementById("id_nome").value;
+let estado = document.querySelector('input[name="radio"]:checked').value;
+let cursos = Array.from(
+document.querySelectorAll('input[name="checkbox"]:checked')
+).map(function (checkbox) {
+return checkbox.value;
+});
+alert("Nome: " + nome +"\nEstado civil: " + estado +"\nCursos: " + cursos.join(", "));});
+</script>
+
+<script type="module">
+    // Importação
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-analytics.js";
+    import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js";
+
+    
+    const firebaseConfig = {
+  apiKey: "AIzaSyBFzru_cfEwZS2jRu1EYOTcaTF2j_nXiDw",
+  authDomain: "show-9c447.firebaseapp.com",
+  databaseURL: "https://show-9c447-default-rtdb.firebaseio.com",
+  projectId: "show-9c447",
+  storageBucket: "show-9c447.appspot.com",
+  messagingSenderId: "653348178295",
+  appId: "1:653348178295:web:388f48503714de3de6f972",
+  measurementId: "G-RTQE7H3EB1"
+};
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const database = getDatabase();
+
+    // Capture o formulário
+    let form = document.getElementById("id_formulario");
+form.addEventListener("submit",(e)=>{
+e.preventDefault()// Evita o envio padrão do formulário
+
+  // Capture os valores do formulário
+  const nome = form['nome'].value;
+  const estado = form['estado'].value;
+  const cursos = form['cursos'].value;
+
+  // Enviar os dados para o Firebase
+  const usersRef = ref(database, 'users');
+  push(usersRef, {
+    nome: nome,
+    estado: estado,
+    cursos: cursos
+
+  }).then(() => {
+    console.log('Dados enviados com sucesso!');
+    // Faça qualquer ação adicional aqui, como redirecionar o usuário ou exibir uma mensagem de sucesso.
+  }).catch((error) => {
+    console.error('Erro ao enviar dados:', error);
+  });
+});
+</script> 
+    </body>
+    </html>
+
+
+
