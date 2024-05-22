@@ -64,7 +64,7 @@ id="id_monta"
 />
 </label>
 </div>
-<button type="button" id="enviar">Enviar</button>
+<button type="submit" id="enviar">Enviar</button>
 </div>
 </fieldset>
 </form>
@@ -110,8 +110,8 @@ e.preventDefault()// Evita o envio padrão do formulário
 
   // Capture os valores do formulário
   const nome = form['nome'].value;
-  const estado = form['estado'].value;
-  const cursos = form['cursos'].value;
+  const estado = form['radio'].value;
+  const cursos = form['checkbox'].value;
 
   // Enviar os dados para o Firebase
   const usersRef = ref(database, 'users');
