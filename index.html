@@ -6,7 +6,8 @@
 <title>FORM</title>
 </head>
 <body>
-<form action="" method="get" id="id_formulario">
+<form action="" method="post" id="id_formulario">
+ 
 <fieldset>
 <legend>FORM</legend>
 <div>
@@ -21,6 +22,11 @@ minlength="5"
 maxlength="40"
 />
 </label>
+</div><br>
+<div>
+  <label for="id_data">Data de nacimento:
+    <input type="date" name="data" id="id_data">
+  </label>
 </div>
 <div>
 <p>Estado Civil:</p>
@@ -33,36 +39,10 @@ maxlength="40"
 <input type="radio" name="radio" value="solteiro" id="id_solteiro" />
 </label>
 </div>
-
 <div>
-<p>Cursos:</p>
-<label for="id_pedre"
->Pedreiro
-<input
-type="checkbox"
-name="checkbox"
-value="Pedreiro"
-id="id_pedre"
-/>
-</label>
-<label for="id_serve"
->Servente
-<input
-type="checkbox"
-name="checkbox"
-value="Servente"
-id="id_serve"
-/>
-</label>
-<label for="id_monta"
->Figma:
-<input
-type="checkbox"
-name="checkbox"
-value="Montador de Sapato"
-id="id_monta"
-/>
-</label>
+  <label for="id_textarea">Cursos:
+      <textarea name="cursos_textarea" id="id_textarea" cols="30" rows="4"></textarea>
+  </label>
 </div>
 <button type="submit" id="enviar">Enviar</button>
 </div>
@@ -71,13 +51,12 @@ id="id_monta"
 <script>
 document.getElementById("enviar").addEventListener("click", function () {
 let nome = document.getElementById("id_nome").value;
+let cursos_textarea = document.getElementById("id_textarea").value;
+let data = document.getElementById("id_data").value;
+
 let estado = document.querySelector('input[name="radio"]:checked').value;
-let cursos = Array.from(
-document.querySelectorAll('input[name="checkbox"]:checked')
-).map(function (checkbox) {
-return checkbox.value;
-});
-alert("Nome: " + nome +"\nEstado civil: " + estado +"\nCursos: " + cursos.join(", "));});
+
+alert("Nome: " + nome +"\nData: "+ data +"\nEstado civil: " + estado +"\nCursos: " + cursos_textarea);});
 
 </script>
 
@@ -109,22 +88,24 @@ alert("Nome: " + nome +"\nEstado civil: " + estado +"\nCursos: " + cursos.join("
 form.addEventListener("submit",(e)=>{
 e.preventDefault()// Evita o envio padrão do formulário
 
-for(let i = 0; i < form.checkbox.length; i++){
-if(form.checkbox[i].checked){
-vetor[i] = form.checkbox[i].value;
-console.log(form.checkbox[i].value)
+for(let i = 0; i < form.cursos_textarea.length; i++){
+if(form.cursos_textarea[i].checked){
+vetor[i] = form.cursos_textarea[i].value;
+console.log(form.cursos_textarea[i].value)
 }
 }
 
   // Capture os valores do formulário
   const nome = form['nome'].value;
+  const data = form['data'].value
   const estado = form['radio'].value;
-  const cursos = form['checkbox'].value;
+  const cursos = form['cursos_textarea'].value;
 
   // Enviar os dados para o Firebase
   const usersRef = ref(database, 'users');
   push(usersRef, {
     nome: nome,
+    data: data,
     estado: estado,
     cursos: cursos
 
